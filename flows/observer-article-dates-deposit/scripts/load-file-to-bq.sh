@@ -1,1 +1,1 @@
-../ejp-csv-deposit/scripts/load-file-to-bq.sh
+../../ejp-csv-deposit/scripts/load-file-to-bq.sh
