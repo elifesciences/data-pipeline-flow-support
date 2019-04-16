@@ -3,8 +3,8 @@
 WARN: this code is run without a virtualenv
 it must not have any dependencies other than Python3"""
 
-import sys, json, csv, fileinput, datetime, html
-from datetime import datetime, timezone
+import sys, json
+from datetime import datetime
 
 def first(lst):
     try:
@@ -48,17 +48,14 @@ def process_row(row):
         "updated_date": format_dt(updated, "%Y-%m-%d"),
         "updated_datetime": format_dt(updated)
     }
-    print(json.dumps(row, indent=4))
+    return json.dumps(row)
 
-def main(input=None, output=None, filename=None):
+def main(iinput=None, out=None):
     # fileinput.input reads sys.argv for input if we don't specify what it should be reading
-    stdin = ['-'] 
-    fh = open(input, 'r') if input else sys.stdin
-    out = output or print
-
+    fh = open(input, 'r') if iinput else sys.stdin
+    out = out or print
     data = json.loads(fh.read())
-    list(map(process_row, data['rows']))
+    [out(process_row(row)) for row in data['rows']]
 
 if __name__ == '__main__':
-    args = sys.argv[1:]
-    main(filename=first(args) or None)
+    main()
