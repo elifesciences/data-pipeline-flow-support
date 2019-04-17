@@ -14,6 +14,9 @@ def first(lst):
 
 def normalise_dt(dt):
     "returns a TZ aware UTC datetime object"
+    # python < 3.7 cannot handle formatting timezones with a colon in it
+    dt, tz = dt[:-6], dt[-6:]
+    dt += tz.replace(':', '')
     return datetime.strptime(dt, "%Y-%m-%dT%H:%M:%S.%f%z")
 
 def format_dt(dt, pattern=None):
