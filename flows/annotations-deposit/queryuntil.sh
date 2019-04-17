@@ -3,7 +3,7 @@
 # stores date of last updated record in file 'statefile'
 # runs until there are fewer than results per-page in resultset
 
-set -eux
+set -eu
 
 touch statefile
 
@@ -27,8 +27,8 @@ while true; do
     # this script wouldn't halt for example
 
     # emit processed results to be handled by nifi
-    cat out | python -m src.hy2bq
-    
+    cat out | python3 -m src.hy2bq
+
     # figure out if we need to recur
     row_count=$(cat out | jq '.rows | length')
     if [ "$row_count" -lt "$results_per_page" ]; then
