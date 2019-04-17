@@ -20,7 +20,7 @@ def normalise_dt(dt):
     return datetime.strptime(dt, "%Y-%m-%dT%H:%M:%S.%f%z")
 
 def format_dt(dt, pattern=None):
-    pattern = pattern or "%Y-%m-%dT%H:%M:%SZ" # 2019-01-24T15:45:51Z
+    pattern = pattern or "%Y-%m-%dT%H:%M:%S%z" # 2019-01-24T15:45:51+0000
     return datetime.strftime(dt, pattern)
 
 def process_row(row):
@@ -38,8 +38,8 @@ def process_row(row):
         "hidden": row['hidden'],
         "publisher_group": row['group'],
         "flagged": row['flagged'],
-        #"title": first(row['document'].get('title', [])), # probably want this rather than what we have
-        "title": row['document'].get('title', []),
+        "title": first(row['document'].get('title', [])), # probably want this rather than what we have
+        #"title": row['document'].get('title', []),
 
         "created_time": format_dt(created, "%H:%M:%S"),
         "created_timezone": format_dt(created, "%z"),
