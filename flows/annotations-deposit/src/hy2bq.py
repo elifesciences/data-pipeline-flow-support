@@ -20,7 +20,7 @@ def normalise_dt(dt):
     return datetime.strptime(dt, "%Y-%m-%dT%H:%M:%S.%f%z")
 
 def format_dt(dt, pattern=None):
-    pattern = pattern or "%Y-%m-%dT%H:%M:%S%z" # 2019-01-24T15:45:51+0000
+    pattern = pattern or "%Y-%m-%dT%H:%M:%SZ" # 2019-01-24T15:45:51Z
     return datetime.strftime(dt, pattern)
 
 def process_row(row):
