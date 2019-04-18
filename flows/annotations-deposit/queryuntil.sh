@@ -7,6 +7,7 @@ set -eu
 
 environment=$1
 statefile="$environment-state"
+outfile=$(mktemp)
 
 touch "$statefile"
 
@@ -18,10 +19,10 @@ results_per_page=200 # 200 is max
 
 while true; do
     # the date of the last record has to be extracted and used in the next request
-    > out curl --silent "https://hypothes.is/api/search?group=imRGyeeV&sort=updated&order=asc&limit=$results_per_page&search_after=$search_after"
+    > "$outfile" curl --silent "https://hypothes.is/api/search?group=imRGyeeV&sort=updated&order=asc&limit=$results_per_page&search_after=$search_after"
 
     # capture a pointer for later calls to script
-    search_after=$(cat out | jq '(.rows[])' -c | tail -n 1 | jq -r '.updated')
+    search_after=$(cat "$outfile" | jq '(.rows[])' -c | tail -n 1 | jq -r '.updated')
     echo "$search_after" > "$statefile"
 
     # BUG: `search_after` parameter is not considering the time component of the query
@@ -30,15 +31,15 @@ while true; do
     # this script wouldn't halt for example
 
     # emit processed results to be handled by nifi
-    cat out | python3 -m src.hy2bq
+    cat "$outfile" | python3 -m src.hy2bq
 
     # figure out if we need to recur
-    row_count=$(cat out | jq '.rows | length')
+    row_count=$(cat "$outfile" | jq '.rows | length')
     if [ "$row_count" -lt "$results_per_page" ]; then
         break # nothing left to scrape
     fi
-    
+
     # recur. uses date from last request in new request, advancing pointer through remote resultset
 done
 
-rm -f out
+rm -f "$outfile"
