@@ -38,18 +38,19 @@ def process_row(row):
         "hidden": row['hidden'],
         "publisher_group": row['group'],
         "flagged": row['flagged'],
-        "title": first(row['document'].get('title', [])), # probably want this rather than what we have
-        #"title": row['document'].get('title', []),
+        "title": first(row['document'].get('title', [])),
 
         "created_time": format_dt(created, "%H:%M:%S"),
         "created_timezone": format_dt(created, "%z"),
         "created_date": format_dt(created, "%Y-%m-%d"),
-        "created_datetime": format_dt(created),
+        "created_timestamp": format_dt(created),
         
         "updated_time": format_dt(updated, "%H:%M:%S"),
         "updated_timezone": format_dt(updated, "%z"),
         "updated_date": format_dt(updated, "%Y-%m-%d"),
-        "updated_datetime": format_dt(updated)
+        "updated_timestamp": format_dt(updated),
+
+        "imported_timestamp": format_dt(datetime.utcnow())
     }
     return json.dumps(row)
 
