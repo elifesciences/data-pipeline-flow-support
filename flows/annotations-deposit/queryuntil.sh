@@ -1,15 +1,18 @@
 #!/bin/bash
 # intended to be run periodically (every minute, hour, day, etc)
-# stores date of last updated record in file 'statefile'
+# stores date of last updated record in file '<env>-statefile'
 # runs until there are fewer than results per-page in resultset
 
 set -eu
 
-touch statefile
+environment=$1
+statefile="$environment-state"
+
+touch "$statefile"
 
 #search_after="2012-06-20T23:14:23.000000+00:00" # earliest record
 default_search_after="2012-01-01T01:01:01.000000+00:00"
-search_after=$(cat statefile)
+search_after=$(cat "$statefile")
 if [ -z "$search_after" ]; then search_after="$default_search_after"; fi
 results_per_page=200 # 200 is max
 
@@ -19,7 +22,7 @@ while true; do
 
     # capture a pointer for later calls to script
     search_after=$(cat out | jq '(.rows[])' -c | tail -n 1 | jq -r '.updated')
-    echo "$search_after" > statefile
+    echo "$search_after" > "$statefile"
 
     # BUG: `search_after` parameter is not considering the time component of the query
     # if this is run more than once a day, you're going to get duplicate results
