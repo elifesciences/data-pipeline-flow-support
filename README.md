@@ -9,7 +9,7 @@ See the [project's formula](https://github.com/elifesciences/data-pipeline-formu
 
 This repository replaces `data-pipeline-ejp-csv-deposit`.
 
-## flows
+## ./flows
 
 The `./flows` directory contains a description of each of the flows and any scripts (and their tests) required for that
 flow to run.
@@ -20,7 +20,7 @@ like a virtualenv or interactive shell.
 More complex transformations happen within Docker containers and may live in a different repository. This will be noted 
 in that flow's README.
 
-## nifi-expression-language
+## ./nifi-expression-language
 
 NiFi uses a JVM scripting language called Groovy with their own library and calls it the 
 [NiFi Expression Language](https://nifi.apache.org/docs/nifi-docs/html/expression-language-guide.html) (EL).
