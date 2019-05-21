@@ -35,3 +35,5 @@ evaulate EL expressions, and scripts that demonstrate it's usage. For example:
     => 380_datascience_early_career_researchers
 
 These scripts are examples *only* and are not executed by processors within the flows at all.
+
+Java (OpenJDK) and Groovy must be installed to successfully execute these scripts: http://www.groovy-lang.org/
