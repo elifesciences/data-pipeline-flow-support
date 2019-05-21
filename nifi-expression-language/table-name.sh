@@ -1,4 +1,12 @@
 #!/bin/bash
+# converts a filename of the type uploaded by EJP to a table name used in BigQuery
+
+# todo: turn these into tests
+# examples of input:
+# ejp_query_tool_query_id_380_DataScience:_Early_Career_Researchers_2018_09_03_eLife.csv
+# ejp_query_tool_query_id_489_DataScience:_Editor_Keywords_2018_09_03_eLife.csv
+# ejp_query_tool_query_id_455_DataScience:_Editors_2018_09_03_eLife.csv
+
 set -eux
 input=$1
 groovy testEL.groovy \
