@@ -14,8 +14,8 @@ This repository replaces `data-pipeline-ejp-csv-deposit`.
 The `./flows` directory contains a description of each of the flows and any scripts (and their tests) required for that
 flow to run.
 
-Python and bash scripts are kept *very* simple as they must operate strictly on their inputs and without any context,
-like a virtualenv or interactive shell.
+Python and bash scripts are kept *very* simple as they must operate strictly on their inputs and without any context or
+special environment, like a virtualenv or interactive shell.
 
 More complex transformations happen within Docker containers and may live in a different repository. This will be noted 
 in that flow's README.
