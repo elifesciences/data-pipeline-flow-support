@@ -1,65 +1,85 @@
-"""hypothesis to bigquery
+"""reviewers csv to bigquery
 
 WARN: this code is run without a virtualenv
 it must not have any dependencies other than Python3"""
 
-import sys, json
-from datetime import datetime
+import re
+import json
+import sys
 
-def first(lst):
-    try:
-        return lst[0]
-    except IndexError:
+NUM_COLS = 5 # number of columns in csv
+DELIMITER = "\",\"" #delimiter for splitting csv file rows
+
+tag_re = re.compile(r"<.?table[^>]*>|<.?t[rd]>|<font[^>]+>|<.?b>|<.?p[^>]*>|\t") #removes html  tags from row
+
+
+def parse_row(row):
+    splited_values = tag_re.sub('', row).split(DELIMITER)
+    splited_values_length = len(splited_values)
+
+    # heuristics used for merging splits when the total number of split < NUM_COLS
+    if splited_values_length < NUM_COLS:
         return None
 
-def normalise_dt(dt):
-    "returns a TZ aware UTC datetime object"
-    # python < 3.7 cannot handle formatting timezones with a colon in it
-    dt, tz = dt[:-6], dt[-6:]
-    dt += tz.replace(':', '')
-    return datetime.strptime(dt, "%Y-%m-%dT%H:%M:%S.%f%z")
+    def process_last_element(text):
+        text = text[:text.rfind('\"')]
+        if text[0:4].upper() == 'NONE':
+            return 'None' + text[4:]
+        return text
 
-def format_dt(dt, pattern=None):
-    pattern = pattern or "%Y-%m-%dT%H:%M:%SZ" # 2019-01-24T15:45:51Z
-    return datetime.strftime(dt, pattern)
+    parsed_row = [None] * NUM_COLS
+    parsed_row[0] = splited_values[0][1:]
+    parsed_row[1] = splited_values[1]
+    parsed_row[4] = process_last_element(splited_values[-1])
 
-def process_row(row):
-    created = normalise_dt(row['created'])
-    updated = normalise_dt(row['updated'])
-    row = {
-        "id": row['id'],
-        "display_name": row['user_info']['display_name'],
-        "user_email": row['user'][len("acct:"):], # "acct:g7izfhhj@elifesciences.org" => "g7izfhhj@elifesciences.org"
-        "uri": row['uri'],
-        "text": row['text'],
-        "tags": row['tags'],
-        "link_to_json": row['links']['json'],
-        "link_to_incontext": row['links']['incontext'],
-        "hidden": row['hidden'],
-        "publisher_group": row['group'],
-        "flagged": row['flagged'],
-        "title": first(row['document'].get('title', [])),
+    # heuristics used for merging splits when the total number of split > NUM_COLS
+    right_item_indices = [0, 1]
+    if splited_values_length > 5:
+        if sum([a.strip()[0:1].isupper() for a in splited_values[2:-1]]) == 2:
+            right_item_indices = [i for i, e in enumerate([a.strip()[0:1].isupper() for a in splited_values[2:-1]])
+                                  if e]
+        elif sum([a.strip()[0:1].isupper() or a.strip()[0:1].isdigit() for a in splited_values[2:-1]]) == 2:
+            right_item_indices = [i for i, e in enumerate(
+                [a.strip()[0:1].isupper() or a.strip()[0:1].isdigit() for a in splited_values[2:-1]]) if e]
 
-        "created_time": format_dt(created, "%H:%M:%S"),
-        "created_timezone": format_dt(created, "%z"),
-        "created_date": format_dt(created, "%Y-%m-%d"),
-        "created_timestamp": format_dt(created),
-        
-        "updated_time": format_dt(updated, "%H:%M:%S"),
-        "updated_timezone": format_dt(updated, "%z"),
-        "updated_date": format_dt(updated, "%Y-%m-%d"),
-        "updated_timestamp": format_dt(updated),
+    parsed_row[2] = DELIMITER.join(splited_values[2:2 + right_item_indices[1]])
+    parsed_row[3] = DELIMITER.join(splited_values[2 + right_item_indices[1]:-1])
 
-        "imported_timestamp": format_dt(datetime.utcnow())
-    }
-    return json.dumps(row)
+    return parsed_row
+
 
 def main(iinput=None, out=None):
     # fileinput.input reads sys.argv for input if we don't specify what it should be reading
-    fh = open(input, 'r') if iinput else sys.stdin
+
+    fp = open(input, 'r') if iinput else sys.stdin
     out = out or print
-    data = json.loads(fh.read())
-    [out(process_row(row)) for row in data['rows']]
+
+    data_dict = dict()
+    unparsed_rows = []
+    line = fp.readline()
+    while line:
+        line = fp.readline()
+        parsed_row = parse_row(line)
+        if parsed_row is None:
+            unparsed_rows.append(line)
+            continue
+        if parsed_row[0] not in data_dict:
+            data_dict[parsed_row[0]] = {
+                'id': parsed_row[0],
+                'reviewer': []
+            }
+        row_dict = data_dict.get(parsed_row[0])
+        row_dict.get('reviewer').append(
+            {
+                'id': parsed_row[1],
+                'major_comments': parsed_row[2],
+                'minor_comments': parsed_row[3],
+                'competing_interests': parsed_row[4]
+            }
+        )
+
+    [out(json.dumps(row)) for row in list(data_dict.values())]
+
 
 if __name__ == '__main__':
     main()
