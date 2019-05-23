@@ -4,84 +4,26 @@
     "name": "id"
   },
   {
-    "type": "STRING",
-    "name": "display_name"
-  },
-  {
-    "type": "STRING",
-    "name": "user_email"
-  },
-  {
-    "type": "STRING",
-    "name": "uri"
-  },
-  {
-    "type": "STRING",
-    "name": "text"
-  },
-  {
-    "type": "STRING",
-    "name": "tags",
-    "mode": "REPEATED"
-  },
-  {
-    "type": "STRING",
-    "name": "link_to_json"
-  },
-  {
-    "type": "STRING",
-    "name": "link_to_incontext"
-  },
-  {
-    "type": "BOOLEAN",
-    "name": "hidden"
-  },
-  {
-    "type": "STRING",
-    "name": "publisher_group"
-  },
-  {
-    "type": "BOOLEAN",
-    "name": "flagged"
-  },
-  {
-    "type": "STRING",
-    "name": "title"
-  },
-  {
-    "type": "TIME",
-    "name": "created_time"
-  },
-  {
-    "type": "STRING",
-    "name": "created_timezone"
-  },
-  {
-    "type": "DATE",
-    "name": "created_date"
-  },
-  {
-    "type": "TIMESTAMP",
-    "name": "created_timestamp"
-  },
-  {
-    "type": "TIME",
-    "name": "updated_time"
-  },
-  {
-    "type": "STRING",
-    "name": "updated_timezone"
-  },
-  {
-    "type": "DATE",
-    "name": "updated_date"
-  },
-  {
-    "type": "TIMESTAMP",
-    "name": "updated_timestamp"
-  },
-  {
-    "type": "TIMESTAMP",
-    "name": "imported_timestamp"
+    "type": "RECORD",
+    "name": "reviewer",
+	"fields":
+	[
+		{
+			"type": "STRING",
+			"name": "id"
+		},
+		{
+			"type": "STRING",
+			"name": "major_comments"
+		},
+		{
+			"type": "STRING",
+			"name": "minor_comments"
+		},
+		{
+			"type": "STRING",
+			"name": "competing_interests"
+		}
+	]
   }
 ]
