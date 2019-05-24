@@ -6,7 +6,7 @@
     },
     {
         "type": "RECORD",
-        "name": "reviewer",
+        "name": "reviews",
         "fields": [
             {
                 "type": "STRING",
