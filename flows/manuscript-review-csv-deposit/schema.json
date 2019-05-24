@@ -1,0 +1,36 @@
+[
+    {
+        "type": "STRING",
+        "name": "id",
+        "mode": "NULLABLE"
+    },
+    {
+        "type": "RECORD",
+        "name": "reviewer",
+        "fields": [
+            {
+                "type": "STRING",
+                "name": "id",
+                "mode": "NULLABLE"
+            },
+            {
+                "type": "STRING",
+                "name": "major_comments",
+                "mode": "NULLABLE"
+            },
+            {
+                "type": "STRING",
+                "name": "minor_comments",
+                "mode": "NULLABLE"
+            },
+            {
+                "type": "STRING",
+                "name": "competing_interests",
+                "mode": "NULLABLE"
+            }
+        ],
+        "mode": "REPEATED"
+    }
+]
+
+

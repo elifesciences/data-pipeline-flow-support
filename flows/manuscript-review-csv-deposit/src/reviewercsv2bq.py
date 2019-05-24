@@ -10,7 +10,8 @@ import sys
 NUM_COLS = 5 # number of columns in csv
 DELIMITER = "\",\"" #delimiter for splitting csv file rows
 
-tag_re = re.compile(r"<.?table[^>]*>|<.?t[rd]>|<font[^>]+>|<.?b>|<.?p[^>]*>|\t") #removes html  tags from row
+tag_re= re.compile(r"<.?table[^>]*>|<.?t[rd]>|<font[^>]+>|<.?b>|<.?p[^>]*>|<.?div[^>]*>|<.?br[^>]*>|\t") #removes html tags
+#removes html  tags from row
 
 
 def parse_row(row):
