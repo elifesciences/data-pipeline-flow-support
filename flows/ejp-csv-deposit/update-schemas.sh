@@ -21,3 +21,4 @@ dump 767_datascience_person_roles
 dump 779_datascience_reviewer_info_all
 # reports 795 and 796 both go to the same table
 dump 795_datascience_person_merge_info_all
+dump 1119_datascience_manuscript_reviews
