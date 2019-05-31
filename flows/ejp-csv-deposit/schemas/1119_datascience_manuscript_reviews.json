@@ -46,5 +46,15 @@
   {
     "name": "imported_timestamp",
     "type": "TIMESTAMP"
+  },
+  {
+    "fields": [
+      {
+        "name": "source_filename",
+        "type": "STRING"
+      }
+    ],
+    "name": "provenance",
+    "type": "RECORD"
   }
 ]
