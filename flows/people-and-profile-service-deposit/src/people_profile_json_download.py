@@ -28,7 +28,6 @@ def download_data(data_url: str):
     Tries to download data and covert downloaded data to json dictionary,
     if not possible return empty dict
     """
-    print('redsds', data_url)
     try:
         response = urllib.request.urlopen(data_url)
         downloaded_data = response.read()
