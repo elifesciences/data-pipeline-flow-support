@@ -1,0 +1,226 @@
+[
+  {
+    "mode": "NULLABLE",
+    "name": "orcid",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "id",
+    "type": "STRING"
+  },
+  {
+    "fields": [
+      {
+        "mode": "NULLABLE",
+        "name": "givenNames",
+        "type": "STRING"
+      },
+      {
+        "mode": "NULLABLE",
+        "name": "index",
+        "type": "STRING"
+      },
+      {
+        "mode": "NULLABLE",
+        "name": "preferred",
+        "type": "STRING"
+      },
+      {
+        "mode": "NULLABLE",
+        "name": "surname",
+        "type": "STRING"
+      }
+    ],
+    "mode": "NULLABLE",
+    "name": "name",
+    "type": "RECORD"
+  },
+  {
+    "fields": [
+      {
+        "fields": [
+          {
+            "fields": [
+              {
+                "mode": "NULLABLE",
+                "name": "country",
+                "type": "STRING"
+              }
+            ],
+            "mode": "NULLABLE",
+            "name": "components",
+            "type": "RECORD"
+          },
+          {
+            "mode": "REPEATED",
+            "name": "formatted",
+            "type": "STRING"
+          }
+        ],
+        "mode": "NULLABLE",
+        "name": "address",
+        "type": "RECORD"
+      },
+      {
+        "mode": "REPEATED",
+        "name": "name",
+        "type": "STRING"
+      }
+    ],
+    "mode": "REPEATED",
+    "name": "affiliations",
+    "type": "RECORD"
+  },
+  {
+    "fields": [
+      {
+        "mode": "NULLABLE",
+        "name": "text",
+        "type": "STRING"
+      },
+      {
+        "mode": "NULLABLE",
+        "name": "type",
+        "type": "STRING"
+      }
+    ],
+    "mode": "REPEATED",
+    "name": "profile",
+    "type": "RECORD"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "competingInterests",
+    "type": "STRING"
+  },
+  {
+    "fields": [
+      {
+        "mode": "NULLABLE",
+        "name": "id",
+        "type": "STRING"
+      },
+      {
+        "mode": "NULLABLE",
+        "name": "label",
+        "type": "STRING"
+      }
+    ],
+    "mode": "NULLABLE",
+    "name": "type",
+    "type": "RECORD"
+  },
+  {
+    "fields": [
+      {
+        "mode": "NULLABLE",
+        "name": "alt",
+        "type": "STRING"
+      },
+      {
+        "fields": [
+          {
+            "mode": "NULLABLE",
+            "name": "x",
+            "type": "INTEGER"
+          },
+          {
+            "mode": "NULLABLE",
+            "name": "y",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE",
+        "name": "focalPoint",
+        "type": "RECORD"
+      },
+      {
+        "fields": [
+          {
+            "mode": "NULLABLE",
+            "name": "height",
+            "type": "INTEGER"
+          },
+          {
+            "mode": "NULLABLE",
+            "name": "width",
+            "type": "INTEGER"
+          }
+        ],
+        "mode": "NULLABLE",
+        "name": "size",
+        "type": "RECORD"
+      },
+      {
+        "fields": [
+          {
+            "mode": "NULLABLE",
+            "name": "filename",
+            "type": "STRING"
+          },
+          {
+            "mode": "NULLABLE",
+            "name": "mediaType",
+            "type": "STRING"
+          },
+          {
+            "mode": "NULLABLE",
+            "name": "uri",
+            "type": "STRING"
+          }
+        ],
+        "mode": "NULLABLE",
+        "name": "source",
+        "type": "RECORD"
+      },
+      {
+        "mode": "NULLABLE",
+        "name": "uri",
+        "type": "STRING"
+      }
+    ],
+    "mode": "NULLABLE",
+    "name": "image",
+    "type": "RECORD"
+  },
+  {
+    "fields": [
+      {
+        "fields": [
+          {
+            "mode": "NULLABLE",
+            "name": "id",
+            "type": "STRING"
+          },
+          {
+            "mode": "NULLABLE",
+            "name": "name",
+            "type": "STRING"
+          }
+        ],
+        "mode": "REPEATED",
+        "name": "expertises",
+        "type": "RECORD"
+      },
+      {
+        "mode": "REPEATED",
+        "name": "focuses",
+        "type": "STRING"
+      },
+      {
+        "mode": "REPEATED",
+        "name": "organisms",
+        "type": "STRING"
+      }
+    ],
+    "mode": "NULLABLE",
+    "name": "research",
+    "type": "RECORD"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "imported_timestamp",
+    "type": "TIMESTAMP"
+  }
+]
