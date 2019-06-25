@@ -54,12 +54,20 @@ def process_row(row):
     }
     return json.dumps(row)
 
-def main(iinput=None, out=None):
-    # fileinput.input reads sys.argv for input if we don't specify what it should be reading
+def is_after_previous_timestamp(row, last_processing_time):
+    """rows need to be further filtered to exclude results after an arbitrary date and time.
+    this is because the annotation API doesn't respect the 'time' component of a request."""
+    return normalise_dt(row['updated']) > normalise_dt(last_processing_time)
+
+def main(previous_timestamp, iinput=None, out=None):
     fh = open(input, 'r') if iinput else sys.stdin
     out = out or print
     data = json.loads(fh.read())
-    [out(process_row(row)) for row in data['rows']]
+    [out(process_row(row)) for row in data['rows'] if is_after_previous_timestamp(row, previous_timestamp)]
 
 if __name__ == '__main__':
-    main()
+    try:
+        previous_timestamp = sys.argv[1]
+        main(previous_timestamp)
+    except IndexError:
+        sys.stderr.write("previous timestamp parameter not given")
