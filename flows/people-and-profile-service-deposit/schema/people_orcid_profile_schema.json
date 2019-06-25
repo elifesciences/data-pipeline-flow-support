@@ -1,0 +1,34 @@
+[
+  {
+    "mode": "NULLABLE",
+    "name": "id",
+    "type": "STRING"
+  },
+  {
+    "fields": [
+      {
+        "mode": "NULLABLE",
+        "name": "index",
+        "type": "STRING"
+      },
+      {
+        "mode": "NULLABLE",
+        "name": "preferred",
+        "type": "STRING"
+      }
+    ],
+    "mode": "NULLABLE",
+    "name": "name",
+    "type": "RECORD"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "orcid",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "imported_timestamp",
+    "type": "TIMESTAMP"
+  }
+]

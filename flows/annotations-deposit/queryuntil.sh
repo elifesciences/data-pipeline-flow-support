@@ -21,17 +21,24 @@ while true; do
     # the date of the last record has to be extracted and used in the next request
     > "$outfile" curl --silent "https://hypothes.is/api/search?group=imRGyeeV&sort=updated&order=asc&limit=$results_per_page&search_after=$search_after"
 
+    # NOTE: `search_after` parameter does not consider the time component of the query
+    # the python script does further comparison of dates
+
+    # WARN: what are the effects if there are more than 200 results in a day?
+    # this script wouldn't halt for example. with 201 results in a single day:
+    # * the request would be made
+    # * 200 results returned
+    # * the 200th timestamp would be recorded and used as input into the next request
+    # * loop recurs
+    # * request is made but time component ignored
+    # * 200 results returned ...
+
+    # emit processed results to be handled by nifi
+    cat "$outfile" | python3 -m src.hy2bq "$search_after"
+
     # capture a pointer for later calls to script
     search_after=$(cat "$outfile" | jq '(.rows[])' -c | tail -n 1 | jq -r '.updated')
     echo "$search_after" > "$statefile"
-
-    # BUG: `search_after` parameter is not considering the time component of the query
-    # if this is run more than once a day, you're going to get duplicate results
-    # I wonder what the effects would be if there were more than 200 results in a day?
-    # this script wouldn't halt for example
-
-    # emit processed results to be handled by nifi
-    cat "$outfile" | python3 -m src.hy2bq
 
     # figure out if we need to recur
     row_count=$(cat "$outfile" | jq '.rows | length')
