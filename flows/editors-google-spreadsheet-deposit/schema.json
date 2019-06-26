@@ -20,33 +20,11 @@
     "type": "STRING"
   },
   {
-    "name": "alternative_bres",
-    "type": "STRING"
-  },
-    {
-    "name": "alternatives_from_outside_the_bre",
-    "type": "STRING"
-  },
-  {
-    "name": "alternatives",
-    "type": "STRING"
-  },
-  {
-    "name": "status",
+    "name": "editor_status",
     "type": "STRING"
   },
   {
     "name": "imported_timestamp",
     "type": "TIMESTAMP"
-  },
-  {
-    "fields": [
-      {
-        "name": "source_filename",
-        "type": "STRING"
-      }
-    ],
-    "name": "provenance",
-    "type": "RECORD"
   }
 ]
