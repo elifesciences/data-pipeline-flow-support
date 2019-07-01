@@ -17,9 +17,9 @@ class TestEditorsCsv2Json(unittest.TestCase):
 
         expected_values = list()
 
-        row_1 = '{"name": "name1", "keywords": "keyword1, keyword2, keyword3", "research_interests": "body of research, interest text", "website_url": "http:\/\/wwww.eexample.com:8080\/sds?ruiu=researcher", "pubmed_url": "http:\/\/pubmedurl.org\/something?arg=value", "editor_status": "BRE"}'
-        row_2 = '{"name": "name1", "keywords": "keyword1, keyword2, keyword3", "research_interests": "body of research, interest text", "website_url": "http:\/\/wwww.eexample.com:8080\/sds?ruiu=researcher", "pubmed_url": "http:\/\/pubmedurl.org\/something?arg=value","editor_status": "BRE"}'
-        row_3 = '{"name": "name2", "keywords": "keyword1, keyword4, keyword5", "research_interests": "body of research interest text2", "website_url": "http:\/\/wwww.eexample2.com:8080\/sds?ruiu=researcher", "pubmed_url": "http:\/\/pubmedurl.org\/something2?arg=value","editor_status": "BRE"}'
+        row_1 = '{"name": "name1", "keywords": "keyword1, keyword2, keyword3", "research_interests": "body of research, interest text", "website_url": "http:\/\/wwww.eexample.com:8080\/sds?ruiu=researcher", "pubmed_url": "http:\/\/pubmedurl.org\/something?arg=value", "editor_role": "BRE"}'
+        row_2 = '{"name": "name1", "keywords": "keyword1, keyword2, keyword3", "research_interests": "body of research, interest text", "website_url": "http:\/\/wwww.eexample.com:8080\/sds?ruiu=researcher", "pubmed_url": "http:\/\/pubmedurl.org\/something?arg=value","editor_role": "BRE"}'
+        row_3 = '{"name": "name2", "keywords": "keyword1, keyword4, keyword5", "research_interests": "body of research interest text2", "website_url": "http:\/\/wwww.eexample2.com:8080\/sds?ruiu=researcher", "pubmed_url": "http:\/\/pubmedurl.org\/something2?arg=value","editor_role": "BRE"}'
         expected_values.append(json.loads(row_1))
         expected_values.append(json.loads(row_2))
         expected_values.append(json.loads(row_3))

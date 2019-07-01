@@ -38,12 +38,12 @@ def main(input=None, output=None, filename=None):
 
     header_reader = csv.reader(fh)
     header = list(map(normalise, next(header_reader)))
-    editor_status = filename[:-1] if filename else ""
+    editor_role = filename[:-1] if filename else ""
 
     reader = csv.DictReader(fh, fieldnames=header)
 
     for row in reader:
-        row["editor_status"] = editor_status
+        row["editor_role"] = editor_role
         row["imported_timestamp"] = time_now
         empty_fields_are_null(row)
 

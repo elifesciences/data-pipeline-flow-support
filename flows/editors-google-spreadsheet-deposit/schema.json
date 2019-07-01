@@ -20,7 +20,7 @@
     "type": "STRING"
   },
   {
-    "name": "editor_status",
+    "name": "editor_role",
     "type": "STRING"
   },
   {
