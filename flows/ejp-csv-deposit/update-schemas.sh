@@ -5,7 +5,7 @@ function dump {
     project="elife-data-pipeline"
     dataset="nifidemo4_temp"
     table=$1
-    echo "$table "
+    echo "$table"
     # regarding --disable_ssl_validation
     # https://issuetracker.google.com/issues/117948931
     bq show --format prettyjson --disable_ssl_validation --schema "$project:$dataset.$table" > ./schemas/$table.json
