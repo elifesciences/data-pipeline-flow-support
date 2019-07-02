@@ -38,7 +38,7 @@ def main(input=None, output=None, filename=None):
 
     header_reader = csv.reader(fh)
     header = list(map(normalise, next(header_reader)))
-    editor_role = filename[:-1] if filename else ""
+    editor_role = " ".join(filename.split('_')[1:]) if filename else ""
 
     reader = csv.DictReader(fh, fieldnames=header)
 
