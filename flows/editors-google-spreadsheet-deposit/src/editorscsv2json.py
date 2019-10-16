@@ -55,4 +55,4 @@ def main(input=None, output=None, filename=None, time_now=None):
 if __name__ == "__main__":
     args = sys.argv[1:]
     file_name, current_time = get_args(args)
-    main(filename=file_name, current_time=current_time)
+    main(filename=file_name, time_now=current_time)
