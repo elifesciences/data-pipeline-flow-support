@@ -4,10 +4,14 @@
     "type": "STRING"
   },
   {
+    "name": "subject_areas",
+    "type": "STRING"
+  },
+  {
     "name": "keywords",
     "type": "STRING"
   },
-   {
+  {
     "name": "research_interests",
     "type": "STRING"
   },
@@ -17,6 +21,10 @@
   },
   {
     "name": "pubmed_url",
+    "type": "STRING"
+  },
+  {
+    "name": "relevant_pubmed_urls",
     "type": "STRING"
   },
   {
