@@ -9,16 +9,22 @@ def normalise(colheader):
     return colheader.lower().strip().replace(" ", "_").replace(")", "").replace("(", "")
 
 
-def now():
-    dtobj = datetime.datetime.now(timezone.utc)
+def get_utc_time(string_datetime: str):
+    dtobj = datetime.datetime.strptime(string_datetime, "%Y-%m-%d %H:%M:%S %z")
+    dtobj = dtobj.astimezone(tz=timezone.utc)
     return dtobj.strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def first(lst):
+def now():
+    dtobj = datetime.datetime.now(timezone.utc)
+    return dtobj.strftime("%Y-%m-%d %H:%M:%S %z")
+
+
+def get_with_default(arg_list: list, index: int, default_val=None):
     try:
-        return lst[0]
+        return arg_list[index]
     except IndexError:
-        return None
+        return default_val
 
 
 def empty_fields_are_null(row):
@@ -29,22 +35,20 @@ def empty_fields_are_null(row):
     return row
 
 
-def main(input=None, output=None, filename=None):
+def main(input=None, output=None, filename=None, time_now=None):
     # fileinput.input reads sys.argv for input if we don't specify what it should be reading
     stdin = ["-"]
     fh = input or fileinput.input(stdin)
     out = output or print
-    time_now = now()
 
     header_reader = csv.reader(fh)
     header = list(map(normalise, next(header_reader)))
-    editor_role = " ".join(filename.split('_')[1:]) if filename else ""
-
+    editor_role = " ".join(filename.split("_")[1:]) if filename else ""
     reader = csv.DictReader(fh, fieldnames=header)
 
     for row in reader:
         row["editor_role"] = editor_role
-        row["imported_timestamp"] = time_now
+        row["imported_timestamp"] = get_utc_time(time_now)
         empty_fields_are_null(row)
 
         out(json.dumps(row))
@@ -52,4 +56,6 @@ def main(input=None, output=None, filename=None):
 
 if __name__ == "__main__":
     args = sys.argv[1:]
-    main(filename=first(args) or None)
+    file_name = get_with_default(args, 0, None)
+    current_time = get_with_default(args, 1, now())
+    main(filename=file_name, time_now=current_time)
