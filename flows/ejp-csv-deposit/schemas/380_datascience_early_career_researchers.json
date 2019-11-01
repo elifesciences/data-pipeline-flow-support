@@ -31,6 +31,11 @@
   }, 
   {
     "mode": "NULLABLE", 
+    "name": "subject_areas", 
+    "type": "STRING"
+  }, 
+  {
+    "mode": "NULLABLE", 
     "name": "keywords", 
     "type": "STRING"
   }, 
